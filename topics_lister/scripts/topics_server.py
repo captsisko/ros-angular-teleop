@@ -4,15 +4,16 @@ from __future__ import print_function
 
 from topics_lister.srv import FetchTopics, FetchTopicsResponse
 import rospy
-from rosapi import proxy, objectutils, params
-from rosapi.srv import *
+# from rosapi import proxy, objectutils, params
+# from rosapi.srv import *
+from topics_lister.msg import Topic
 
 def sendTopics(request):
     # print("%s" %request)
     print("_________________________")
-    # return FetchTopicsResponse( ['test1'], ['test2'] )
+    return FetchTopicsResponse( ['test1'] )
     # return FetchTopicsResponse( ['test1', 'test2'], ['test1', 'test2'] )
-    return FetchTopicsResponse( [['topic1', 'type1'], ['topic2', 'type2']] )
+    # return FetchTopicsResponse( [['topic1', 'type1'], ['topic2', 'type2']] )
     
 
     # args should be ['topics', 'types'] args are(['test1', 'test2'],)
@@ -26,7 +27,7 @@ def sendTopics(request):
 
 # def topics_server():
 rospy.init_node('fetch_topics_server')
-# rospy.Service('/rosapi/topics', Topics, sendTopics)
+# rospy.Service('fetch_topics', Topic, sendTopics)
 s = rospy.Service('fetch_topics', FetchTopics, sendTopics)
 print ("Serving topics ...")
 rospy.spin()

@@ -1,1 +1,2 @@
-string[] topic
+string name
+string type
