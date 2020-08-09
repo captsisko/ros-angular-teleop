@@ -4,33 +4,27 @@ from __future__ import print_function
 
 from topics_lister.srv import FetchTopics, FetchTopicsResponse
 import rospy
-# from rosapi import proxy, objectutils, params
-# from rosapi.srv import *
 from topics_lister.msg import Topic
 
 def sendTopics(request):
     # print("%s" %request)
-    print("_________________________")
-    return FetchTopicsResponse( ['test1'] )
-    # return FetchTopicsResponse( ['test1', 'test2'], ['test1', 'test2'] )
-    # return FetchTopicsResponse( [['topic1', 'type1'], ['topic2', 'type2']] )
-    
+    # print("_________________________")
 
-    # args should be ['topics', 'types'] args are(['test1', 'test2'],)
+    msg_topic_1 = Topic('/turtle1/color_sensor', 'turtlesim/Color')
+    # msg_topic_1 = Topic(name = '/turtle1/color_sensor', type =  'turtlesim/Color')
+    # msg_topic_3 = Topic(name = '/rosout', type = 'rosgraph_msgs/Log')
 
-    # ['/turtle1/color_sensor', 'turtlesim/Color'],
-    # ['/client_count', 'std_msgs/Int32'],
-    # ['/rosout', 'rosgraph_msgs/Log'],
-    
-    # topics, types = proxy.get_topics_and_types(rosapi.glob_helper.topics_glob)
-    # return FetchTopicsResponse(topics, types)
+    response = FetchTopicsResponse()
+    # response.topics = [msg_topic_1 , msg_topic_2 , msg_topic_3 ]
+    response.topics = [msg_topic_1]
 
-# def topics_server():
-rospy.init_node('fetch_topics_server')
-# rospy.Service('fetch_topics', Topic, sendTopics)
-s = rospy.Service('fetch_topics', FetchTopics, sendTopics)
-print ("Serving topics ...")
-rospy.spin()
+    return response
 
-# if __name__ == "__main__":
-#     topics_server()
+def topics_server():
+    rospy.init_node('fetch_topics_server')
+    s = rospy.Service('fetch_topics', FetchTopics, sendTopics)
+    print ("Serving topics ...")
+    rospy.spin()
+
+if __name__ == "__main__":
+    topics_server()
